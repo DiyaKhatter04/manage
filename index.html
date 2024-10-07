@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechCorp Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --background-color: #f5f7fa;
+            --text-color: #34495e;
+            --border-color: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-container, .login-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h2, h3, h4 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 12px;
+            margin: 12px 0;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            border: none;
+            font-weight: 500;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            background-color: #ffffff;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: #2980b9;
+            font-weight: 500;
+        }
+
+        tr {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        tr:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #fff;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        li:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .empnames {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .empnames:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        hr {
+            margin: 20px 0;
+            border: none;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .navbar {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            font-size: 1.5em;
+            font-weight: 600;
+        }
+
+        .navbar-brand img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 20px;
+            background-color: var(--secondary-color);
+            border-radius: 5px;
+            text-align: center;
+            line-height: 20px;
+            color: white;
+            transition: width 0.5s ease-in-out;
+        }
+
+        .search-bar {
+            margin-bottom: 20px;
+        }
+
+        .search-bar input {
+            width: calc(100% - 24px);
+            padding-left: 40px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%23333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>');
+            background-repeat: no-repeat;
+            background-position: 10px center;
+        }
+
+        .search-card {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: none;
+            max-width: 80%;
+            width: 400px;
+        }
+
+        .task-table {
+            margin-top: 20px;
+        }
+
+        .completed-task {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        #todo-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .complete-task-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .complete-task-btn:hover {
+            background-color: #27ae60;
+        }
+
+        /* New styles for interactive features */
+        .task-priority {
+            font-weight: bold;
+        }
+
+        .priority-high {
+            color: #e74c3c;
+        }
+
+        .priority-medium {
+            color: #f39c12;
+        }
+
+        .priority-low {
+            color: #3498db;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 10px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #notification-center {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 300px;
+            z-index: 1000;
+        }
+
+        .notification {
+            background-color: #fff;
+            border-left: 4px solid var(--primary-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .notification.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .notification.error {
+            border-left-color: #e74c3c;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-container, .login-container {
+                width: 90%;
+                padding: 20px;
+            }
+
+            table, th, td {
+                font-size: 14px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .dashboard-container, .login-container {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .empnames, li, tr {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #admin-dashboard {
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .progress-bar {
+            width: 100%;
+            background-color: #f2f2f2;
+            border-radius: 5px;
+        }
+
+        .progress {
+            height: 20px;
+            background-color: #4caf50;
+            border-radius: 5px;
+            text-align: center;
+            color: white;
+        }
+
+        #employee-details-banner {
+            position: fixed;
+            top: 10%;
+            left: 50%;
+            transform: translate(-50%, -10%);
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: none; /* Initially hidden */
+        }
+
+        .employee-picture {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Login Page -->
+    <div id="login-page" class="login-container">
+        <h2 style="text-align: center">TechCorp Login</h2>
+        <form id="login-form">
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+        <p id="error-message" class="error" style="color: red; text-align: center;"></p>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="admin-dashboard" class="hidden">
+        <nav class="navbar">
+            <div class="navbar-brand">
+                <img src="logocomp.jpg" alt="TechCorp Logo">
+                <span>TechCorp Admin Dashboard</span>
+            </div>
+            <button id="logout-admin">Logout</button>
+        </nav>
+        <div class="dashboard-container">
+            <h2>Admin Dashboard</h2>
+
+            <!-- Search Bar -->
+            <div class="search-bar">
+                <input type="text" id="admin-search" placeholder="Search tasks, employees, or teams...">
+            </div>
+
+            <!-- Add Task Section -->
+            <div id="task-manager">
+                <h3>Add Task</h3>
+                <input type="text" id="new-task" placeholder="Task Name" required>
+                <select id="assign-to" required>
+                    <option value="">-- Select Employee --</option>
+                    <option value="Sujal Tiwari">Sujal Tiwari (Technical)</option>
+                    <option value="Anubhav Jain">Anubhav Jain (Technical)</option>
+                    <option value="Siya Mathur">Siya Mathur (Marketing)</option>
+                    <option value="Hriday Kumar">Hriday Kumar (Marketing)</option>
+                    <option value="Pihu Ranawat">Pihu Ranawat (HR)</option>
+                    <option value="Aadil Khanna">Aadil Khanna (HR)</option>
+                </select>
+                <input type="date" id="task-deadline" required>
+                <select id="task-priority" required>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+                <button id="add-task">Add Task</button>
+            </div>
+
+            <!-- Teams Info -->
+            <h3>Teams Overview</h3>
+
+            <!-- Technical Team Table -->
+            <div class="team-table">
+                <h4>Technical Team</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Total Tasks</th>
+                            <th>Deadline</th>
+                            <th>Progress</th>
+                        </tr>
+                    </thead>
+                    <tbody id="technical-team">
+                        <!-- Team members will be dynamically added here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Marketing Team Table -->
+            <div class="team-table">
+                <h4>Marketing Team</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Total Tasks</th>
+                            <th>Deadline</th>
+                            <th>Progress</th>
+                        </tr>
+                    </thead>
+                    <tbody id="marketing-team">
+                        <!-- Team members will be dynamically added here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- HR Team Table -->
+            <div class="team-table">
+                <h4>HR Team</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Total Tasks</th>
+                            <th>Deadline</th>
+                            <th>Progress</th>
+                        </tr>
+                    </thead>
+                    <tbody id="hr-team">
+                        <!-- Team members will be dynamically added here -->
+                    </tbody>
+                </table>
+            </div>
+            <div id="employee-details-banner">
+                <!-- Employee details will be populated here -->
+            </div>
+
+            <!-- Task Assignment Table -->
+            <div class="task-table">
+                <h3>Task Assignments</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Task</th>
+                            <th>Assigned To</th>
+                            <th>Status</th>
+                            <th>Priority</th>
+                            <th>Deadline</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="task-assignments">
+                        <!-- Task assignments will be dynamically added here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Search Card -->
+        <div id="search-card" class="search-card">
+            <h3>Search Results</h3>
+            <p id="search-results"></p>
+            <button id="close-search">Close</button>
+        </div>
+    </div>
+
+    <!-- Employee Dashboard -->
+    <div id="employee-dashboard" class="hidden">
+        <nav class="navbar">
+            <div class="navbar-brand">
+                <img src="logocomp.jpg" alt="TechCorp Logo">
+                <span>TechCorp Employee Dashboard</span>
+            </div>
+            <button id="logout-employee">Logout</button>
+        </nav>
+        <div class="dashboard-container">
+            <h2>Employee Dashboard</h2>
+
+            <!-- Search Bar -->
+            <div class="search-bar">
+                <input type="text" id="employee-search" placeholder="Search tasks or to-dos...">
+            </div>
+
+            <!-- Employee Info -->
+            <div id="employee-info">
+                <!-- Employee info will be dynamically added here -->
+            </div>
+
+            <h3>To-Do List</h3>
+            <select id="employee-selector" required>
+                <option value="">-- Select Employee --</option>
+                <option value="Sujal Tiwari">Sujal Tiwari (Technical)</option>
+                <option value="Anubhav Jain">Anubhav Jain (Technical)</option>
+                <option value="Siya Mathur">Siya Mathur (Marketing)</option>
+                <option value="Hriday Kumar">Hriday Kumar (Marketing)</option>
+                <option value="Pihu Ranawat">Pihu Ranawat (HR)</option>
+                <option value="Aadil Khanna">Aadil Khanna (HR)</option>
+            </select>
+            <input type="text" id="new-todo" placeholder="New To-Do" required>
+            <button id="add-todo">Add To-Do</button>
+            <ul id="todo-list"></ul>
+        </div>
+    </div>
+
+    <!-- Task Details Modal -->
+    <div id="task-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Task Details</h2>
+            <div id="task-details"></div>
+        </div>
+    </div>
+
+    <!-- Notification Center -->
+    <div id="notification-center"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    const users = {
+        admin: { username: "admin", password: "admin123", role: "admin" },
+        employee: { username: "employee", password: "employee123", role: "employee" }
+    };
+
+    const employees = [
+        { name: "Sujal Tiwari", age: 28, picture: "https://i.pinimg.com/originals/18/db/bb/18dbbbca9cf9f835dd01bf507e7bb7ac.jpg", address: "123 Main Loren Street,London", qualification: "B.Tech", team: "Technical", position: "Coder", totalTasks: 5, completedTasks: 3, pendingTasks: 2, deadline: "2024-09-20", progress: 60 },
+        { name: "Anubhav Jain", age: 30, picture: "https://tse4.mm.bing.net/th?id=OIP.neYyo99c-kq4c54btUgWwwHaE8&pid=Api&P=0&h=180", address: "456 Oak Street,Sydeny,Australia", qualification: "M.Tech", team: "Technical", position: "Developer", totalTasks: 4, completedTasks: 3, pendingTasks: 1, deadline: "2024-09-25", progress: 75 },
+        { name: "Siya Mathur", age: 26, picture: "https://filmfare.wwmindia.com/content/2020/jun/anushkasharma11591110405.jpg", address: "789 Pine Street ,Arizona,USA", qualification: "MBA", team: "Marketing", position: "Manager", totalTasks: 6, completedTasks: 4, pendingTasks: 2, deadline: "2024-09-18", progress: 80 },
+        { name: "Hriday Kumar", age: 27, picture: "https://tse3.mm.bing.net/th?id=OIP.cGVLWe4Z_RLn1zQl4S7QWAHaKX&pid=Api&P=0&h=180", address: "159 Maple Street,Edmonton,Canada", qualification: "BBA", team: "Marketing", position: "Analyst", totalTasks: 3, completedTasks: 1, pendingTasks: 2, deadline: "2024-09-22", progress: 33 },
+        { name: "Pihu Ranawat", age: 29, picture: "https://1.bp.blogspot.com/-yFokkKe1Bm0/XyahKuUF5FI/AAAAAAAACfc/ifK_gNL-zycdCczF7YnMyJtfAVG_DVziACLcBGAsYHQ/s1600/a862615ab535f273a7c317f5b6ca734b.jpg", address: "753 Elm Street,Bengaluru,India", qualification: "B.Sc", team: "HR", position: "HR Executive", totalTasks: 5, completedTasks: 4, pendingTasks: 1, deadline: "2024-09-19", progress: 80 },
+        { name: "Aadil Khanna", age: 31, picture: "https://tse4.mm.bing.net/th?id=OIP.NkqezPCCCfTxKbzBNbNHuQAAAA&pid=Api&P=0&h=180", address: "951 Cedar Street,Chicago,USA", qualification: "M.Sc", team: "HR", position: "HR Manager", totalTasks: 4, completedTasks: 2, pendingTasks: 2, deadline: "2024-09-24", progress: 50 }
+    ];
+
+    let tasks = [
+        { id: 1, name: "Complete project report", assignedTo: "Sujal Tiwari", status: "In Progress", priority: "high", deadline: "2024-09-15" },
+        { id: 2, name: "Review code changes", assignedTo: "Anubhav Jain", status: "Completed", priority: "medium", deadline: "2024-09-10" },
+        { id: 3, name: "Prepare marketing strategy", assignedTo: "Siya Mathur", status: "In Progress", priority: "high", deadline: "2024-09-20" },
+        { id: 4, name: "Analyze market trends", assignedTo: "Hriday Kumar", status: "In Progress", priority: "medium", deadline: "2024-09-18" },
+        { id: 5, name: "Conduct employee survey", assignedTo: "Pihu Ranawat", status: "Completed", priority: "low", deadline: "2024-09-12" },
+        { id: 6, name: "Update HR policies", assignedTo: "Aadil Khanna", status: "In Progress", priority: "medium", deadline: "2024-09-25" }
+    ];
+
+    let taskIdCounter = tasks.length + 1;
+
+    populateTeamTables();
+    populateTaskAssignments();
+    populateEmployeeInfo();
+
+    // Login Functionality
+    document.getElementById('login-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value.trim();
+        const user = Object.values(users).find(u => u.username === username && u.password === password);
+
+        if (user) {
+            document.getElementById('login-page').classList.add('hidden');
+            if (user.role === "admin") {
+                document.getElementById('admin-dashboard').classList.remove('hidden');
+            } else {
+                document.getElementById('employee-dashboard').classList.remove('hidden');
+            }
+        } else {
+            document.getElementById('error-message').textContent = "Invalid username or password";
+        }
+    });
+
+    // Logout Functionality
+    document.getElementById('logout-admin').addEventListener('click', function() {
+        document.getElementById('admin-dashboard').classList.add('hidden');
+        document.getElementById('login-page').classList.remove('hidden');
+    });
+
+    document.getElementById('logout-employee').addEventListener('click', function() {
+        document.getElementById('employee-dashboard').classList.add('hidden');
+        document.getElementById('login-page').classList.remove('hidden');
+    });
+
+    // Populate Team Tables with Unique Row IDs
+    function populateTeamTables() {
+        const teams = ['technical', 'marketing', 'hr'];
+        teams.forEach(team => {
+            const tableBody = document.getElementById(`${team}-team`);
+            employees
+                .filter(emp => emp.team.toLowerCase() === team)
+                .forEach(emp => {
+                    const row = tableBody.insertRow();
+                    row.id = `employee-${emp.name.replace(/\s+/g, '-').toLowerCase()}`; // Assign unique ID
+                    const employeeNameCell = `<td class="employee-name" data-emp-name="${emp.name}">${emp.name}</td>`;
+                    row.innerHTML = `
+                        ${employeeNameCell}
+                        <td>${emp.position}</td>
+                        <td>${emp.totalTasks}</td>
+                        <td>${emp.deadline}</td>
+                        <td>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: ${emp.progress}%;">${emp.progress}%</div>
+                            </div>
+                        </td>
+                    `;
+                    
+                    // Add click event listener to the employee name cell
+                    row.querySelector('.employee-name').addEventListener('click', function() {
+                        showEmployeeDetails(emp.name);
+                    });
+                });
+        });
+    }
+
+    // Populate Task Assignments Table
+    function populateTaskAssignments() {
+        const tableBody = document.getElementById('task-assignments');
+        tasks.forEach(task => {
+            const row = tableBody.insertRow();
+            row.id = `task-${task.id}`;
+            row.innerHTML = `
+                <td>${task.name}</td>
+                <td>${task.assignedTo}</td>
+                <td>${task.status}</td>
+                <td><span class="task-priority priority-${task.priority}">${capitalizeFirstLetter(task.priority)}</span></td>
+                <td>${task.deadline}</td>
+                <td>
+                    <button onclick="showTaskDetails(${task.id})">Details</button>
+                    <button onclick="updateTaskStatus(${task.id})">Update Status</button>
+                </td>
+            `;
+        });
+    }
+
+    // Capitalize First Letter of Priority
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+    // Populate Employee Info Section
+    function populateEmployeeInfo() {
+        const employeeInfo = document.getElementById('employee-info');
+        employeeInfo.innerHTML = "";
+
+        employees.forEach(emp => {
+            const div = document.createElement('div');
+            div.className = 'empnames';
+            div.id = `employee-info-${emp.name.replace(/\s+/g, '-').toLowerCase()}`;
+            div.innerHTML = `
+                <p><strong>Name:</strong> ${emp.name}</p>
+                <p><strong>Team:</strong> ${emp.team} Team</p>
+                <p><strong>Position:</strong> ${emp.position}</p>
+                <p><strong>Total Tasks:</strong> ${emp.totalTasks}</p>
+                <p><strong>Completed Tasks:</strong> ${emp.completedTasks}</p>
+                <p><strong>Pending Tasks:</strong> ${emp.pendingTasks}</p>
+                <p><strong>Deadline:</strong> ${emp.deadline}</p>
+                <p><strong>Progress:</strong> ${emp.progress}%</p>
+                <div class="progress-bar">
+                    <div class="progress" style="width: ${emp.progress}%;">${emp.progress}%</div>
+                </div>
+            `;
+            employeeInfo.appendChild(div);
+            if (emp !== employees[employees.length - 1]) {
+                employeeInfo.appendChild(document.createElement('hr'));
+            }
+        });
+    }
+
+    // Add Task Event Listener
+    document.getElementById('add-task').addEventListener('click', function() {
+        const taskName = document.getElementById('new-task').value.trim();
+        const assignedTo = document.getElementById('assign-to').value;
+        const deadline = document.getElementById('task-deadline').value;
+        const priority = document.getElementById('task-priority').value;
+
+        if (taskName && assignedTo && deadline && priority) {
+            const employee = employees.find(emp => emp.name === assignedTo);
+            if (employee) {
+                employee.totalTasks++;
+                employee.pendingTasks++;
+                employee.progress = Math.round((employee.completedTasks / employee.totalTasks) * 100);
+
+                const employeeRowId = `employee-${employee.name.replace(/\s+/g, '-').toLowerCase()}`;
+                const employeeRow = document.getElementById(employeeRowId);
+                if (employeeRow) {
+                    employeeRow.cells[2].textContent = employee.totalTasks;
+                    const progressDiv = employeeRow.querySelector('.progress');
+                    if (progressDiv) {
+                        progressDiv.style.width = `${employee.progress}%`;
+                        progressDiv.textContent = `${employee.progress}%`;
+                    }
+                }
+
+                const taskAssignments = document.getElementById('task-assignments');
+                const newTaskId = taskIdCounter++;
+                tasks.push({
+                    id: newTaskId,
+                    name: taskName,
+                    assignedTo: employee.name,
+                    status: "In Progress",
+                    priority: priority,
+                    deadline: deadline
+                });
+
+                const newRow = taskAssignments.insertRow();
+                newRow.id = `task-${newTaskId}`;
+                newRow.innerHTML = `
+                    <td>${taskName}</td>
+                    <td>${employee.name}</td>
+                    <td>In Progress</td>
+                    <td><span class="task-priority priority-${priority}">${capitalizeFirstLetter(priority)}</span></td>
+                    <td>${deadline}</td>
+                    <td>
+                        <button onclick="showTaskDetails(${newTaskId})">Details</button>
+                        <button onclick="updateTaskStatus(${newTaskId})">Update Status</button>
+                    </td>
+                `;
+
+                document.getElementById('new-task').value = "";
+                document.getElementById('task-deadline').value = "";
+                document.getElementById('task-priority').value = "low";
+
+                showNotification(`New task "${taskName}" assigned to ${employee.name}`);
+                updateEmployeeInfo(employee);
+            } else {
+                showNotification(`Employee "${assignedTo}" not found.`, true);
+            }
+        } else {
+            showNotification("Please fill in all task details.", true);
+        }
+    });
+
+    // Show Task Details in Modal
+    window.showTaskDetails = function(taskId) {
+        const task = tasks.find(t => t.id === taskId);
+        if (!task) {
+            showNotification("Task not found.", true);
+            return;
+        }
+        const modal = document.getElementById('task-modal');
+        const detailsDiv = document.getElementById('task-details');
+        detailsDiv.innerHTML = `
+            <p><strong>Task:</strong> ${task.name}</p>
+            <p><strong>Assigned To:</strong> ${task.assignedTo}</p>
+            <p><strong>Status:</strong> ${task.status}</p>
+            <p><strong>Priority:</strong> <span class="task-priority priority-${task.priority}">${capitalizeFirstLetter(task.priority)}</span></p>
+            <p><strong>Deadline:</strong> ${task.deadline}</p>
+        `;
+        modal.style.display = "block";
+    }
+
+    // Update Task Status
+    window.updateTaskStatus = function(taskId) {
+        const task = tasks.find(t => t.id === taskId);
+        if (!task) {
+            showNotification("Task not found.", true);
+            return;
+        }
+
+        const newStatus = task.status === "In Progress" ? "Completed" : "In Progress";
+        task.status = newStatus;
+
+        const taskRow = document.getElementById(`task-${taskId}`);
+        if (taskRow) {
+            taskRow.cells[2].textContent = newStatus;
+        }
+
+        const employee = employees.find(emp => emp.name === task.assignedTo);
+        if (employee) {
+            if (newStatus === "Completed") {
+                employee.completedTasks++;
+                employee.pendingTasks--;
+            } else {
+                employee.completedTasks--;
+                employee.pendingTasks++;
+            }
+            employee.progress = Math.round((employee.completedTasks / employee.totalTasks) * 100);
+
+            const employeeRowId = `employee-${employee.name.replace(/\s+/g, '-').toLowerCase()}`;
+            const employeeRow = document.getElementById(employeeRowId);
+            if (employeeRow) {
+                const progressDiv = employeeRow.querySelector('.progress');
+                if (progressDiv) {
+                    progressDiv.style.width = `${employee.progress}%`;
+                    progressDiv.textContent = `${employee.progress}%`;
+                }
+            }
+
+            updateEmployeeInfo(employee);
+        }
+
+        if (taskRow) {
+            const prioritySpan = taskRow.querySelector('.task-priority');
+            if (prioritySpan) {
+                prioritySpan.classList.remove('priority-high', 'priority-medium', 'priority-low');
+                prioritySpan.classList.add(`priority-${task.priority}`);
+                prioritySpan.textContent = capitalizeFirstLetter(task.priority);
+            }
+        }
+
+        showNotification(`Task "${task.name}" status updated to ${newStatus}`);
+    }
+
+    // Show Notification
+    function showNotification(message, isError = false) {
+        const notificationCenter = document.getElementById('notification-center');
+        const notification = document.createElement('div');
+        notification.className = 'notification';
+        if (isError) {
+            notification.classList.add('error');
+        }
+        notification.textContent = message;
+        notificationCenter.appendChild(notification);
+
+        setTimeout(() => {
+            notification.classList.add('show');
+        }, 100);
+
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => {
+                notificationCenter.removeChild(notification);
+            }, 300);
+        }, 5000);
+    }
+
+    // Add To-Do Event Listener
+    // Add To-Do Event Listener
+    document.getElementById('add-todo').addEventListener('click', function() {
+        const employee = document.getElementById('employee-selector').value;
+        const newTodo = document.getElementById('new-todo').value.trim();
+
+        if (newTodo && employee) {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <span>${newTodo} (for ${employee})</span>
+                <button class="complete-task-btn">Complete</button>
+            `;
+            document.getElementById('todo-list').appendChild(li);
+            document.getElementById('new-todo').value = "";
+
+            li.querySelector('.complete-task-btn').addEventListener('click', function() {
+                li.querySelector('span').classList.add('completed-task');
+                this.disabled = true;
+                updateEmployeeProgress(employee);
+                showNotification(`To-do item completed for ${employee}`);
+            });
+
+            showNotification(`New to-do item added for ${employee}`);
+        } else {
+            showNotification("Please select an employee and enter a to-do item.", true);
+        }
+    });
+
+    // Update Employee Progress (To-Do Completion)
+    function updateEmployeeProgress(employeeName) {
+        const employee = employees.find(emp => emp.name === employeeName);
+        if (employee) {
+            employee.completedTasks++;
+            employee.pendingTasks--;
+            employee.progress = Math.round((employee.completedTasks / employee.totalTasks) * 100);
+
+            const employeeRowId = `employee-${employee.name.replace(/\s+/g, '-').toLowerCase()}`;
+            const employeeRow = document.getElementById(employeeRowId);
+            if (employeeRow) {
+                const progressDiv = employeeRow.querySelector('.progress');
+                if (progressDiv) {
+                    progressDiv.style.width = `${employee.progress}%`;
+                    progressDiv.textContent = `${employee.progress}%`;
+                }
+            }
+
+            updateEmployeeInfo(employee);
+        }
+    }
+
+    // Update Employee Info Section
+    function updateEmployeeInfo(employee) {
+        const employeeInfoElementId = `employee-info-${employee.name.replace(/\s+/g, '-').toLowerCase()}`;
+        const employeeInfoElement = document.getElementById(employeeInfoElementId);
+        if (employeeInfoElement) {
+            employeeInfoElement.innerHTML = `
+                <p><strong>Name:</strong> ${employee.name}</p>
+                <p><strong>Team:</strong> ${employee.team} Team</p>
+                <p><strong>Position:</strong> ${employee.position}</p>
+                <p><strong>Total Tasks:</strong> ${employee.totalTasks}</p>
+                <p><strong>Completed Tasks:</strong> ${employee.completedTasks}</p>
+                <p><strong>Pending Tasks:</strong> ${employee.pendingTasks}</p>
+                <p><strong>Deadline:</strong> ${employee.deadline}</p>
+                <p><strong>Progress:</strong> ${employee.progress}%</p>
+                <div class="progress-bar">
+                    <div class="progress" style="width: ${employee.progress}%;">${employee.progress}%</div>
+                </div>
+            `;
+        }
+    }
+
+    // Close Modal Functionality
+    document.querySelectorAll('.close').forEach(closeBtn => {
+        closeBtn.addEventListener('click', function() {
+            const modal = this.closest('.modal');
+            modal.style.display = "none";
+        });
+    });
+
+    // Close Modal When Clicking Outside
+    window.addEventListener('click', function(event) {
+        const modal = document.getElementById('task-modal');
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    });
+
+    // Search Functionality for Admin Dashboard
+    document.getElementById('admin-search').addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        const searchResults = [];
+
+        // Search through tasks
+        tasks.forEach(task => {
+            if (task.name.toLowerCase().includes(searchTerm) || 
+                task.assignedTo.toLowerCase().includes(searchTerm) ||
+                task.status.toLowerCase().includes(searchTerm) ||
+                task.priority.toLowerCase().includes(searchTerm)) {
+                searchResults.push(`Task: ${task.name} (Assigned to: ${task.assignedTo})`);
+            }
+        });
+
+        // Search through employees
+        employees.forEach(emp => {
+            if (emp.name.toLowerCase().includes(searchTerm) || 
+                emp.team.toLowerCase().includes(searchTerm) ||
+                emp.position.toLowerCase().includes(searchTerm)) {
+                searchResults.push(`Employee: ${emp.name} (${emp.team} Team, ${emp.position})`);
+            }
+        });
+
+        // Display search results
+        const searchCard = document.getElementById('search-card');
+        const searchResultsElement = document.getElementById('search-results');
+        
+        if (searchResults.length > 0) {
+            searchResultsElement.innerHTML = searchResults.map(result => `<p>${result}</p>`).join('');
+            searchCard.style.display = 'block';
+        } else {
+            searchCard.style.display = 'none';
+        }
+    });
+
+    // Close Search Card
+    document.getElementById('close-search').addEventListener('click', function() {
+        document.getElementById('search-card').style.display = 'none';
+    });
+
+    // Search Functionality for Employee Dashboard
+    document.getElementById('employee-search').addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        const todoList = document.getElementById('todo-list');
+        const todos = todoList.getElementsByTagName('li');
+
+        for (let i = 0; i < todos.length; i++) {
+            const todoText = todos[i].textContent.toLowerCase();
+            if (todoText.includes(searchTerm)) {
+                todos[i].style.display = "";
+            } else {
+                todos[i].style.display = "none";
+            }
+        }
+    });
+
+    // Show Employee Details in a Banner
+    function showEmployeeDetails(employeeName) {
+        const employee = employees.find(emp => emp.name === employeeName);
+        if (!employee) return;
+
+        const banner = document.getElementById('employee-details-banner');
+        banner.innerHTML = `
+            <img src="${employee.picture}" alt="${employee.name}'s Picture" class="employee-picture">
+            <h2>${employee.name}</h2>
+            <p><strong>Age:</strong> ${employee.age}</p>
+            <p><strong>Address:</strong> ${employee.address}</p>
+            <p><strong>Qualification:</strong> ${employee.qualification}</p>
+            <button onclick="closeBanner()">Close</button>
+        `;
+        banner.style.display = 'block'; // Show the banner
+    }
+
+    // Close the employee details banner
+    window.closeBanner = function() {
+        const banner = document.getElementById('employee-details-banner');
+        banner.style.display = 'none'; // Hide the banner
+    }
+});
+    </script>
+</body>
+</html>
